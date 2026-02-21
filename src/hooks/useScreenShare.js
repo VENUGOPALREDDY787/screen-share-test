@@ -1,5 +1,3 @@
-// src/hooks/useScreenShare.js
-
 import { useState, useEffect, useRef } from "react";
 
 export default function useScreenShare() {

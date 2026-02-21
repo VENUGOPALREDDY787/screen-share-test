@@ -1,4 +1,4 @@
-/* Main Container */
+
 .home-container {
   min-height: 100vh;
   min-width :100vw;
@@ -7,7 +7,6 @@
   font-family: Arial, sans-serif;
 }
 
-/* Navbar */
 .navbar {
   border-bottom: 1px solid #222;
   padding: 16px 40px;
@@ -120,7 +119,7 @@
   background: #111;
 }
 
-/* Features */
+
 .features {
   max-width: 1000px;
   margin: 80px auto;
@@ -146,7 +145,7 @@
   font-size: 14px;
 }
 
-/* Footer */
+
 .footer {
   border-top: 1px solid #222;
   padding: 40px 20px;

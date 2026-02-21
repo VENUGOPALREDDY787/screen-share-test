@@ -70,7 +70,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Features */}
+  
       <section className="features">
         <div className="feature-card">
           <h3>Zero Latency</h3>
@@ -88,7 +88,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
+   
       <footer className="footer">
         <p>© 2026 ScreenShare Pro</p>
 

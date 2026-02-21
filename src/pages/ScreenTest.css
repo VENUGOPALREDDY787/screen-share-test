@@ -1,4 +1,4 @@
-/* Full page background */
+
 .screen-container {
   min-height: 100vh;
   min-width:100vw;
@@ -11,7 +11,7 @@
   font-family: Arial, sans-serif;
 }
 
-/* Main card */
+
 .screen-card {
   width: 100%;
   max-width: 1100px;
@@ -23,14 +23,14 @@
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
 }
 
-/* Title */
+
 .screen-title {
   font-size: 32px;
   margin-bottom: 30px;
   font-weight: bold;
 }
 
-/* Video */
+
 .screen-video {
   width: 100%;
   max-width: 1000px;
@@ -40,7 +40,7 @@
   background: #000;
 }
 
-/* Metadata box */
+
 .screen-metadata {
   margin-top: 20px;
   padding: 20px;
@@ -52,7 +52,7 @@
   text-align: left;
 }
 
-/* Button wrapper */
+
 .screen-buttons {
   margin-top: 25px;
   display: flex;
