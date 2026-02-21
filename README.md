@@ -1,40 +1,38 @@
-📺 Screen Share Test Application
+# 📺 Screen Share Test Application
 
 A React-based frontend application that demonstrates browser screen-sharing permissions, media stream lifecycle management, robust success and failure handling, and proper resource cleanup using native Web APIs.
 
-🚀 Project Overview
+---
+
+## 🚀 Project Overview
 
 This project was built as part of a frontend shortlisting task. The objective was to create a clean and reliable screen-sharing test application that:
 
-Verifies browser support for screen sharing
+- Verifies browser support for screen sharing  
+- Requests and manages screen-sharing permissions  
+- Displays a live preview of the shared screen  
+- Extracts and displays media stream metadata  
+- Detects when screen sharing stops (manually or externally)  
+- Properly cleans up media tracks to prevent memory leaks  
+- Handles all states with clear UI feedback  
 
-Requests and manages screen-sharing permissions
+The application uses **React (Vite)** and native browser Web APIs without relying on any third-party screen-sharing libraries.
 
-Displays a live preview of the shared screen
+---
 
-Extracts and displays media stream metadata
+## 🏗️ Tech Stack
 
-Detects when screen sharing stops (manually or externally)
+- React (Vite)
+- JavaScript (ES6+)
+- React Router
+- Native Browser Web APIs (`navigator.mediaDevices.getDisplayMedia`)
+- Plain CSS (No UI libraries)
 
-Properly cleans up media tracks to prevent leaks
+---
 
-Handles all states with clear UI feedback
+## 📂 Project Structure
 
-The application uses React (Vite) and native browser Web APIs, without relying on any third-party screen-sharing libraries.
-
-🏗️ Tech Stack
-
-React (Vite)
-
-JavaScript (ES6+)
-
-React Router
-
-Native Browser Web APIs (navigator.mediaDevices.getDisplayMedia)
-
-Plain CSS (no UI libraries)
-
-📂 Project Structure
+```
 src/
  ├── components/
  │     └── Button.jsx
@@ -45,204 +43,214 @@ src/
  │     └── ScreenTest.jsx
  ├── App.jsx
  └── main.jsx
-🖥️ Application Flow
-1️⃣ Homepage (/)
+```
 
-Displays title: Screen Share Test App
+---
 
-Verifies support for:
+## 🖥️ Application Flow
 
+### 1️⃣ Homepage (`/`)
+
+- Displays title: **Screen Share Test App**
+- Verifies browser support for:
+
+```javascript
 navigator.mediaDevices.getDisplayMedia
+```
 
-If unsupported, displays a browser compatibility message
+- If unsupported → Displays browser compatibility message  
+- If supported → Navigates to `/screen-test`
 
-If supported, navigates to /screen-test
+---
 
-2️⃣ Screen Test Page (/screen-test)
-🔹 Permission Handling
+### 2️⃣ Screen Test Page (`/screen-test`)
 
-When the user clicks Start Screen Sharing:
+#### 🔹 Permission Handling
 
-App transitions to a "requesting" state
+When the user clicks **Start Screen Sharing**:
 
-Calls:
+- App transitions to a `"requesting"` state  
+- Calls:
 
+```javascript
 navigator.mediaDevices.getDisplayMedia({
   video: { frameRate: { ideal: 30 } },
   audio: false
-})
+});
+```
 
 Handles distinct states:
 
-Requesting permission
-
-Permission granted
-
-User cancelled
-
-Permission denied
-
-Unknown error
+- `requesting`
+- `granted`
+- `cancelled`
+- `denied`
+- `error`
 
 The UI reflects each state individually instead of using generic error handling.
 
-🔹 Live Screen Preview & Metadata
+---
+
+#### 🔹 Live Screen Preview & Metadata
 
 After permission is granted:
 
-The MediaStream is attached to a <video> element using:
+The `MediaStream` is attached to a `<video>` element:
 
-video.srcObject = stream
+```javascript
+video.srcObject = stream;
+```
 
 Metadata is extracted using:
 
-track.getSettings()
+```javascript
+track.getSettings();
+```
 
 Displays:
 
-Resolution
-
-Frame rate
-
-Display surface type (tab / window / monitor)
+- Resolution  
+- Frame rate  
+- Display surface type (tab / window / monitor)  
 
 ⚠️ No recording or backend streaming is implemented — preview is local only.
 
-🔹 Stream Lifecycle Detection
+---
+
+#### 🔹 Stream Lifecycle Detection
 
 The application listens for:
 
+```javascript
 track.onended
+```
 
 This detects when:
 
-The user manually stops screen sharing from the browser UI
-
-The browser ends the stream unexpectedly
+- The user manually stops screen sharing from the browser UI  
+- The browser ends the stream unexpectedly  
 
 When detected:
 
-All media tracks are stopped
+- All media tracks are stopped  
+- Stream references are cleared  
+- UI updates immediately  
 
-Stream references are cleared
+---
 
-UI updates immediately to reflect the stopped state
-
-3️⃣ End / Retry Flow
+### 3️⃣ End / Retry Flow
 
 After screen sharing stops:
 
-Displays "Screen sharing stopped"
-
-Provides:
-
-Retry Screen Test
-
-Back to Home
+- Displays **"Screen sharing stopped"**
+- Provides:
+  - Retry Screen Test  
+  - Back to Home  
 
 Retry behavior ensures:
 
-A fresh getDisplayMedia request is initiated
-
-Previous streams are not reused
-
-Media tracks are properly released
+- A fresh `getDisplayMedia` request is initiated  
+- Previous streams are not reused  
+- Media tracks are properly released  
 
 Cleanup is handled:
 
-On manual stop
-
-On browser-triggered stop
-
-On component unmount
+- On manual stop  
+- On browser-triggered stop  
+- On component unmount  
 
 This prevents media leaks and ensures proper resource management.
 
-🧠 Architecture Decision
+---
+
+## 🧠 Architecture Decision
 
 All screen-sharing logic is isolated inside a custom hook:
 
+```
 useScreenShare()
+```
 
 This ensures:
 
-Separation of concerns
+- Separation of concerns  
+- Clean and declarative UI components  
+- Controlled side-effect management  
+- Maintainable and scalable structure  
 
-Clean and declarative UI components
+---
 
-Controlled side-effect management
-
-Maintainable and scalable structure
-
-🛡️ Error Handling & States
+## 🛡️ Error Handling & States
 
 Distinct UI states are implemented for:
 
-idle
-
-requesting
-
-granted
-
-cancelled
-
-denied
-
-error
-
-stopped
+- `idle`
+- `requesting`
+- `granted`
+- `cancelled`
+- `denied`
+- `error`
+- `stopped`
 
 Each state has a clear and specific UI representation.
 
-🌍 Browser Support
+---
+
+## 🌍 Browser Support
 
 Tested in:
 
-Google Chrome
+- Google Chrome  
+- Microsoft Edge  
 
-Microsoft Edge
+⚠️ Safari has limited support for `getDisplayMedia`.
 
-⚠️ Safari has limited support for getDisplayMedia.
+---
 
-📦 Setup Instructions
+## 📦 Setup Instructions
 
 Clone the repository and install dependencies:
 
+```bash
 npm install
 npm run dev
+```
 
 Then open:
 
+```
 http://localhost:5173
-📌 Known Limitations
+```
 
-Safari has limited or partial support for screen sharing
+---
 
-Some systems may show a black preview when sharing the same tab due to browser security restrictions
+## 📌 Known Limitations
 
-Display surface type may not be available in older browser versions
+- Safari has limited or partial support for screen sharing  
+- Some systems may show a black preview when sharing the same tab due to browser security restrictions  
+- Display surface type may not be available in older browser versions  
 
-🎯 Key Requirements Covered
+---
 
-Native Web API usage
+## 🎯 Key Requirements Covered
 
-MediaStream lifecycle management
+- Native Web API usage  
+- MediaStream lifecycle management  
+- Proper cleanup handling  
+- Custom hook architecture  
+- Retry flow without stream reuse  
+- Clear state-based UI rendering  
+- No third-party screen-sharing libraries  
 
-Proper cleanup handling
+---
 
-Custom hook architecture
+## 📹 Demo
 
-Retry flow without stream reuse
+[(https://drive.google.com/file/d/1rGrGpvBzwawZMsZKuTuT2h9GwMpckbuO/view?usp=sharing)]
 
-Clear state-based UI rendering
+---
 
-No third-party screen-sharing libraries
+## 👨‍💻 Author
 
-📹 Demo
-
-(Add your demo video link here)
-
-👨‍💻 Author
-
-Your Name
+**G. Venugopal Reddy**  
 Frontend Developer
